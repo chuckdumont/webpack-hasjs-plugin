@@ -1,5 +1,6 @@
 /*
- * (C) Copyright IBM Corp. 2012, 2016 All Rights Reserved.
+ * (C) Copyright HCL Technologies Ltd. 2018
+ * (C) Copyright IBM Corp. 2012, 2017 All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +15,8 @@
  * limitations under the License.
  */
 
- const BasicEvaluatedExpression = require("webpack/lib/BasicEvaluatedExpression");
+const BasicEvaluatedExpression = require("webpack/lib/BasicEvaluatedExpression");
+const {tap} = require("webpack-plugin-compat").for("webpack-hasjs-plugin");
 
 module.exports = class HasJsPlguin {
   constructor(options) {
@@ -22,9 +24,9 @@ module.exports = class HasJsPlguin {
   }
 
   apply(compiler) {
-    compiler.plugin("compilation", (__, params) => {
-      params.normalModuleFactory.plugin("parser", (parser) => {
-        parser.plugin("evaluate CallExpression", (expr) => {
+    tap(compiler, "compilation", (__, params) => {
+      tap(params.normalModuleFactory, "parser", (parser) => {
+        tap(parser, "evaluate CallExpression", (expr) => {
           if (expr && expr.type === "CallExpression" &&
               expr.callee && expr.callee.name == "has" &&
               expr.arguments && expr.arguments.length === 1 &&
