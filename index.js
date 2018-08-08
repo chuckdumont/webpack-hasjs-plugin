@@ -31,7 +31,7 @@ module.exports = class HasJsPlguin {
               expr.callee && expr.callee.name == "has" &&
               expr.arguments && expr.arguments.length === 1 &&
               expr.arguments[0].type === "Literal" && typeof expr.arguments[0].value === 'string') {
-            const value = this.options.features[expr.arguments[0].value];
+            let value = this.options.features[expr.arguments[0].value];
             if (typeof value === 'undefined' && this.options.coerceUndefinedToFalse) {
               value = false;
             }
