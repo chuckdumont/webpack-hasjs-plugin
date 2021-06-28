@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-const BasicEvaluatedExpression = require("webpack/lib/BasicEvaluatedExpression");
+const webpack_major_version = parseInt(require("webpack/package.json").version.split(".")[0]);
+const BasicEvaluatedExpression = require(
+	webpack_major_version >=5 ? "webpack/lib/javascript/BasicEvaluatedExpression" :
+	                            "webpack/lib/BasicEvaluatedExpression"
+);
 const {tap} = require("webpack-plugin-compat").for("webpack-hasjs-plugin");
 
 module.exports = class HasJsPlguin {
