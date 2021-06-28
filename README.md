@@ -70,8 +70,6 @@ If true, then any calls to the `has` function which specify a feature not declar
 ## Limitations
 
 Due to limitations in the webpack parser, this plugin does not transform the source when the
-`has()` function call is a member of a comparison operator involving greater-than or less-than (e.g. `if (has('ie') >= 10)`), or if it used in an assignment (e.g. `var foo = has('foo') && getFoo();`).  It does work, however, if the result of the ternary operator (e.g. `var foo=has('foo')?getFoo():undefined;`) is used in the assignment.
-
-Also, note that when using the equality operators ==, ===, != and !==, webpack unfortunately fails to transform the source if the operands are not the same type, regardless of their  values.  So the code `if(has('foo')===0)` will be transformed if the value of the statically defined feature `foo` is a number, but not if it is any other type.
+`has()` function call is a member of a comparison operator involving greater-than or less-than (e.g. `if (has('ie') >= 10)`), or, before webpack 5, if it used in an assignment (e.g. `var foo = has('foo') && getFoo();`).  It does work, however, if the result of the ternary operator (e.g. `var foo=has('foo')?getFoo():undefined;`) is used in the assignment.
 
 Fortunately, these problematic usage patterns are not common, and if they are encountered, the code is simply left alone, so they are not harmful.
